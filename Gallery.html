@@ -1,0 +1,385 @@
+
+<style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    color: #333;
+}
+
+/* NAV */
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    list-style: none;
+    background: #3F5461;
+    padding: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.logo {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+/* MAIN */
+.gallery-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #3F5461;
+}
+
+/* CART BUTTON */
+.cart-button {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.cart-button button {
+    padding: 10px 20px;
+    background: #ff9800;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* TABLE */
+.gallery-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.gallery-table th,
+.gallery-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.gallery-table th {
+    background: #3F5461;
+    color: white;
+}
+
+.gallery-table img {
+    width: 80px;
+    border-radius: 5px;
+}
+
+/* ADD BUTTON */
+.add-btn {
+    padding: 8px 15px;
+    background: #3F5461;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #ff9800;
+}
+
+/* FOOTER */
+.site-footer {
+    margin-top: 60px;
+    background: #3F5461;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    width: 350px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    color: #3F5461;
+}
+
+#cartItems {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#cartItems li {
+    margin-bottom: 8px;
+}
+
+.modal-buttons button {
+    margin: 5px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-buttons button:first-child {
+    background: #999;
+    color: white;
+}
+
+.modal-buttons button:nth-child(2) {
+    background: #ff9800;
+    color: white;
+}
+
+.close-btn {
+    background: #3F5461;
+    color: white;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Book Haven</title>
+        <link rel="stylesheet" href="indexstyle.css">
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<!-- CART MODAL -->
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <h2>Your Cart</h2>
+
+        <ul id="cartItems"></ul>
+
+        <div class="modal-buttons">
+            <button onclick="clearCart()">Clear Cart</button>
+            <button onclick="processOrder()">Process Order</button>
+            <button class="close-btn" onclick="closeCart()">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+
+    function addToCart(item) {
+        cart.push(item);
+        alert("Item added.");
+    }
+
+    function openCart() {
+        const modal = document.getElementById("cartModal");
+        const list = document.getElementById("cartItems");
+
+        list.innerHTML = "";
+
+        if (cart.length === 0) {
+            list.innerHTML = "<li>Your cart is empty.</li>";
+        } else {
+            cart.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = item;
+                list.appendChild(li);
+            });
+        }
+
+        modal.style.display = "flex";
+    }
+
+    function closeCart() {
+        document.getElementById("cartModal").style.display = "none";
+    }
+
+    function clearCart() {
+        cart = [];
+        document.getElementById("cartItems").innerHTML = "<li>Your cart is empty.</li>";
+    }
+
+    function processOrder() {
+        alert("Thank you for your order.");
+        cart = [];
+        closeCart();
+    }
+</script>
+
+<body>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="Index.html"><strong>Home</strong></a></li>
+            <li><a href="About.html"><strong>About Us</strong></a></li>
+            <li class="logo"> <a hred="Index.html">Book Haven Bookstore Logo</a></li> 
+            <li><a href="Gallery.html"><strong>Gallery</strong></a></li>
+            <li><a href="Custom.html"><strong>Custom</strong></a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="gallery-container">
+
+    <!-- Cart Button -->
+ <div class="cart-button">
+    <button onclick="openCart()">🛒 View Cart</button>
+</div>
+
+
+    <h1>Our Collection</h1>
+
+    <!-- Table -->
+    <table class="gallery-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><img src="images/Book1.png" alt="Brie Mine 4Ever"></td>
+                <td>Brie Mine 4Ever</td>
+                <td>A book for cheese lovers.</td>
+                <td>$14.99</td>
+                <td><button class="add-btn" onclick="addToCart('Brie Mine 4Ever')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+            <tr>
+                <td><img src="images/Book2.png" alt="Glory Riders"></td>
+                <td>Glory Riders</td>
+                <td>A book about bikers.</td>
+                <td>$18.99</td>
+                <td><button class="add-btn" onclick="addToCart('Glory Riders')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+            <tr>
+                <td><img src="images/Book3.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Sorcerer’s Shadowed Chronicles</td>
+                <td>A fantasy book.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Sorcerer’s Shadowed Chronicles<')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                      <tr>
+                <td><img src="images/Magazine1.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Ball</td>
+                <td>A magazine about pickleball.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Ball magazine')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                                  <tr>
+                <td><img src="images/Magazine2.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Travel</td>
+                <td>Amagazine for travelers.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Travel magazine')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                                  <tr>
+                <td><img src="images/Magazine3.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Ball</td>
+                <td>A magazine about pickleball.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Ball magazine')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                                  <tr>
+                <td><img src="images/Notebook.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Notebook</td>
+                <td>A notebook with text on the cover that says Book Haven Bookstore.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Notebook')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                                  <tr>
+                <td><img src="images/ToteBag.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Canvas tote bag</td>
+                <td>A canvas tote bag with black lettering that says ALL I DO IS READ READ READ.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Tote bag')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+                                  <tr>
+                <td><img src="images/Stickers.png" alt="Sorcerer’s Shadowed Chronicles"></td>
+                <td>Stickers</td>
+                <td>A set of four Book Haven Bookstore stickers that promote reading.</td>
+                <td>$21.99</td>
+                <td><button class="add-btn" onclick="addToCart('Stickers')">
+    Add to Cart
+</button>
+</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</main>
+
+<footer class="site-footer">
+    <div class="footer-bottom">
+        <p>© 2026 Book Haven Bookstore. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
